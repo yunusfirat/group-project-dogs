@@ -27,7 +27,11 @@ const AppProvider = ({ children }) => {
   };
 
   const saveImage = () => {
-    setSavedPhotos((savedPhotos) => savedPhotos.concat(randomDog));
+    if (savedPhotos.includes(randomDog)) {
+      alert("you have already added this dog.");
+    } else {
+      setSavedPhotos((savedPhotos) => savedPhotos.concat(randomDog));
+    }
   };
 
   return (
