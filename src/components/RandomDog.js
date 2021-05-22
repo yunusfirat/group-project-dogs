@@ -8,7 +8,7 @@ const RandomDog = () => {
   return (
     <div className="RandomDog">
       <h2 className="RandomDog-title">Random Dogs</h2>
-      <img className="RandomDog-image" src={randomDog.message} />
+      <img className="RandomDog-image" src={randomDog.message} alt="randomdog" />
       <p>
         <button className="RandomDog-button" onClick={saveImage}>
           Save Image

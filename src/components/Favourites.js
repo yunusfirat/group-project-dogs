@@ -4,7 +4,6 @@ import "./Favourites.css";
 
 const Favourites = () => {
   const { savedPhotos } = useGlobalContext();
-  console.log(savedPhotos);
   return (
     <div className="Favourites">
       <div className="Favourites-breeds">
@@ -15,9 +14,15 @@ const Favourites = () => {
       <div className="Favourites-saved">
         <h2>Saved Photos</h2>
         <div className="Favourites-photos">
-          {savedPhotos.map((photo) => {
+          {savedPhotos.map((photo, index) => {
             const { message } = photo;
-            return <img src={message ? message : "http://via.placeholder.com/300x300"} />;
+            return (
+              <img
+                key={index}
+                src={message ? message : "http://via.placeholder.com/300x300"}
+                alt={index + 1}
+              />
+            );
           })}
         </div>
       </div>

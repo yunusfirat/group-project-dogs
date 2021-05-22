@@ -5,7 +5,6 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [randomDog, setRandomDog] = useState([]);
   const [savedPhotos, setSavedPhotos] = useState([]);
-  console.log(savedPhotos);
   const url = "https://dog.ceo/api/breeds/image/random";
 
   const FetchRandomDog = async () => {
