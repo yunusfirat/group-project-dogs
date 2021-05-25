@@ -28,6 +28,11 @@ const Breeds = () => {
     setSelectState(e.target.value);
   }
 
+  function handleClick() {
+    const randomBreed = options[Math.floor(Math.random() * options.length)];
+    setSelectState(randomBreed);
+  }
+
   return (
     <div className="Breeds">
       <h2 className="Breeds-title">Select a Breed</h2>
@@ -46,7 +51,9 @@ const Breeds = () => {
         alt={selectedPhoto ? selectedPhoto.slice(30, 6) : "empty"}
       />
       <p>
-        <button className="Breeds-button">Show me more!</button>
+        <button className="Breeds-button" onClick={handleClick}>
+          Show me more!
+        </button>
       </p>
     </div>
   );
