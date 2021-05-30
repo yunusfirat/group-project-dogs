@@ -3,12 +3,18 @@ import "./Favourites.css";
 
 class Favourites extends React.Component {
   render() {
+    let topFiveDogs = props.dogs.sort(function(a, b) {
+      return a.votes - b.votes;
+  }).slice(-2);
+
     return (
       <div className="Favourites">
         <div className="Favourites-breeds">
           <h2>Favourite Breeds</h2>
-          <p>???</p>
-          <p>???</p>
+          {/* the below assumes an array of dogs will be passed in as props */}
+          {topFiveDogs.forEach((dog, index) => (
+            <p key={index}>{dog.name}</p>
+          ))}  
         </div>
         <div className="Favourites-saved">
           <h2>Saved Photos</h2>
