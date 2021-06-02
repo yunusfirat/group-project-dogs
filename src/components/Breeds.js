@@ -11,11 +11,11 @@ const Breeds = () => {
   ];
 
   const [selectedPhoto, setSelectedPhoto] = useState(null);
-  const [selectState, setSelectState] = useState(options[0]);
+  const [selectedBreed, setSelectedBreed] = useState(options[0]);
 
   useEffect(() => {
-    fetchRandomPhoto(selectState);
-  }, [selectState]);
+    fetchRandomPhoto(selectedBreed);
+  }, [selectedBreed]);
 
   function fetchRandomPhoto(breed) {
     fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
@@ -25,19 +25,19 @@ const Breeds = () => {
   }
 
   function handleSelect(e) {
-    setSelectState(e.target.value);
+    setSelectedBreed(e.target.value);
   }
 
   function handleClick() {
     const randomBreed = options[Math.floor(Math.random() * options.length)];
-    setSelectState(randomBreed);
+    setSelectedBreed(randomBreed);
   }
 
   return (
     <div className="Breeds">
       <h2 className="Breeds-title">Select a Breed</h2>
       <p>
-        <select className="Breeds-select" value={selectState} onChange={handleSelect}>
+        <select className="Breeds-select" value={selectedBreed} onChange={handleSelect}>
           {options.map((breedName, index) => (
             <option key={index} value={breedName}>
               {breedName}
