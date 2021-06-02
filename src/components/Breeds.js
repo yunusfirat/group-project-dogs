@@ -10,7 +10,7 @@ const Breeds = () => {
     "wolfhound/irish"
   ];
 
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [selectedPhotoUrl, setSelectedPhotoUrl] = useState(null);
   const [selectedBreed, setSelectedBreed] = useState(options[0]);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const Breeds = () => {
   function fetchRandomPhoto(breed) {
     fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
       .then((res) => res.json())
-      .then((data) => setSelectedPhoto(data.message))
+      .then((data) => setSelectedPhotoUrl(data.message))
       .catch((err) => alert(err));
   }
 
@@ -47,8 +47,8 @@ const Breeds = () => {
       </p>
       <img
         className="Breeds-image"
-        src={selectedPhoto ? selectedPhoto : "http://via.placeholder.com/300x300"}
-        alt={selectedPhoto ? selectedPhoto.slice(30, 6) : "empty"}
+        src={selectedPhotoUrl ? selectedPhotoUrl : "http://via.placeholder.com/300x300"}
+        alt={selectedBreed ? selectedBreed : "empty"}
       />
       <p>
         <button className="Breeds-button" onClick={handleClick}>
