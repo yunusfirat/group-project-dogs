@@ -5,6 +5,7 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [randomDog, setRandomDog] = useState([]);
   const [savedPhotos, setSavedPhotos] = useState([]);
+  const [favouriteBreeds, setFavouriteBreeds] = useState({});
   const url = "https://dog.ceo/api/breeds/image/random";
 
   const FetchRandomDog = async () => {
@@ -33,8 +34,18 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const addVoteToBreed = (breed) => {
+    const newBreedVote = {};
+    newBreedVote[breed] = breed in favouriteBreeds ? favouriteBreeds[breed] + 1 : 1;
+    setFavouriteBreeds({
+      ...favouriteBreeds,
+      ...newBreedVote
+    });
+  };
+
   return (
-    <AppContext.Provider value={{ randomDog, nextImage, saveImage, savedPhotos }}>
+    <AppContext.Provider
+      value={{ randomDog, nextImage, saveImage, savedPhotos, favouriteBreeds, addVoteToBreed }}>
       {children}
     </AppContext.Provider>
   );
