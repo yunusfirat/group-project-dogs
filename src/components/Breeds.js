@@ -19,7 +19,6 @@ const Breeds = () => {
     await fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.message);
         let nameArray = [];
         for (const [key, value] of Object.entries(data.message)) {
           nameArray.push(`${key}`);
