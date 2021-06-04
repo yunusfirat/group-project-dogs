@@ -2,23 +2,37 @@ import React, { useState, useEffect } from "react";
 import "./Breeds.css";
 
 const Breeds = () => {
-  const options = [
-    "beagle",
-    "bluetick",
-    "bullterrier/staffordshire",
-    "malinois",
-    "wolfhound/irish"
-  ];
+  const [breedsName, setBreedsName] = useState([]);
+  const [selectedPhotoUrl, setSelectedPhotoUrl] = useState(undefined);
+  const [selectedBreed, setSelectedBreed] = useState(undefined);
 
-  const [selectedPhotoUrl, setSelectedPhotoUrl] = useState(null);
-  const [selectedBreed, setSelectedBreed] = useState(options[0]);
+  useEffect(() => {
+    getAllBreedsName();
+  }, []);
 
   useEffect(() => {
     fetchRandomPhoto(selectedBreed);
   }, [selectedBreed]);
 
-  function fetchRandomPhoto(breed) {
-    fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
+  async function getAllBreedsName() {
+    const url = "https://dog.ceo/api/breeds/list/all";
+    await fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.message);
+        let nameArray = [];
+        for (const [key, value] of Object.entries(data.message)) {
+          nameArray.push(`${key}`);
+          value.forEach((breed) => nameArray.push(`${key}/${breed}`));
+        }
+        setBreedsName(nameArray);
+        setSelectedBreed(nameArray[0]);
+      })
+      .catch((err) => alert(err));
+  }
+
+  async function fetchRandomPhoto(breed) {
+    await fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
       .then((res) => res.json())
       .then((data) => setSelectedPhotoUrl(data.message))
       .catch((err) => alert(err));
@@ -29,7 +43,7 @@ const Breeds = () => {
   }
 
   function handleClick() {
-    const randomBreed = options[Math.floor(Math.random() * options.length)];
+    const randomBreed = breedsName[Math.floor(Math.random() * breedsName.length)];
     setSelectedBreed(randomBreed);
   }
 
@@ -38,7 +52,7 @@ const Breeds = () => {
       <h2 className="Breeds-title">Select a Breed</h2>
       <p>
         <select className="Breeds-select" value={selectedBreed} onChange={handleSelect}>
-          {options.map((breedName, index) => (
+          {breedsName.map((breedName, index) => (
             <option key={index} value={breedName}>
               {breedName}
             </option>
@@ -47,7 +61,7 @@ const Breeds = () => {
       </p>
       <img
         className="Breeds-image"
-        src={selectedPhotoUrl ? selectedPhotoUrl : "http://via.placeholder.com/300x300"}
+        src={selectedBreed ? selectedPhotoUrl : "http://via.placeholder.com/300x300"}
         alt={selectedBreed ? selectedBreed : "empty"}
       />
       <p>
